@@ -1,4 +1,4 @@
-module github.com/wasuwa/sample-api
+module github.com/wasuwa/blog-api
 
 go 1.22.0
 
