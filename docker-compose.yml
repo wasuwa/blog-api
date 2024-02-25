@@ -3,23 +3,19 @@ services:
   app:
     build:
       context: .
-      dockerfile: ./Dockerfile.local
+      dockerfile: ./app/Dockerfile.local
     ports:
-      - "8080:8080"
+      - 8080:8080
     volumes:
       - .:/app
-  # lb-db:
-  #   image: mysql:5.7
-  #   platform: linux/amd64
-  #   environment:
-  #     MYSQL_DATABASE: moneyeasy
-  #     MYSQL_USER:
-  #     MYSQL_PASSWORD:
-  #     MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
-  #     MYSQL_ROOT_PASSWORD:
-  #   ports:
-  #     - 3308:3306
-  #   volumes:
-  #     - ./db/docker/conf:/etc/mysql/conf.d
-  #     - ./db/docker/data:/var/lib/mysql
-  #   command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_general_ci
+    environment:
+      API_PORT: 8080
+      REDIS_ADDRESS: localhost:6379
+  redis:
+    image: redis/redis-stack:7.2.0-v8
+    ports:
+      - 6379:6379
+      - 8001:8001
+    volumes:
+      - "./data/redis:/data"
+      - "./redis.conf:/etc/redis.conf"
